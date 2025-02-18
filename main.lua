@@ -7,7 +7,10 @@ function love.load()
     -- set window size
     love.window.setMode(900, 600)
     -- set background color
-    love.graphics.setBackgroundColor(0.1, 0.1, 0.1)
+    love.graphics.setBackgroundColor(0.2, 0.2, 0.2)
+
+    -- Paddle movement speed
+    local pSpeed = 600
     
     -- Game state with two scores and winning score
     Game = {
@@ -21,7 +24,7 @@ function love.load()
     PLeft = {
         x = 30,
         y = 200,
-        speed = 400,
+        speed = pSpeed,
         height = 100,
         width = 20
     }
@@ -30,7 +33,7 @@ function love.load()
     PRight = {
         x = love.graphics.getWidth() - 50,
         y = 200,
-        speed = 400,
+        speed = pSpeed,
         height = 100,
         width = 20
     }
@@ -99,7 +102,7 @@ function love.update(dt)
         -- Left paddle collision
         if Ball.x - Ball.radius <= PLeft.x + PLeft.width and Ball.x > PLeft.x then
             if Ball.y >= PLeft.y and Ball.y <= PLeft.y + PLeft.height then
-                Ball.dx = math.abs(Ball.dx) * 1.1  -- ensure ball moves right
+                Ball.dx = math.abs(Ball.dx)  -- ensure ball moves right
                 Ball.x = PLeft.x + PLeft.width + Ball.radius
                 Ball.dy = Ball.dy + (Ball.y - (PLeft.y + PLeft.height / 2)) * 2  -- Add angle variation
             end
@@ -108,7 +111,7 @@ function love.update(dt)
         -- Right paddle collision
         if Ball.x + Ball.radius >= PRight.x and Ball.x < PRight.x + PRight.width then
             if Ball.y >= PRight.y and Ball.y <= PRight.y + PRight.height then
-                Ball.dx = -math.abs(Ball.dx) * 1.1  -- ensure ball moves left
+                Ball.dx = -math.abs(Ball.dx)  -- ensure ball moves left
                 Ball.x = PRight.x - Ball.radius
                 Ball.dy = Ball.dy + (Ball.y - (PRight.y + PRight.height / 2)) * 2  -- Add angle variation
             end
